@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Manager</title>
+</head>
+<body>
+    <h1>Управление книгами</h1>
+
+    <h2>Добавить новую книгу:</h2>
+    <form method="post" action="">
+        {% csrf_token %}
+        {{ book_form.as_p }}
+        {% for field in form %}
+            <div>
+                {{ field.label_tag }} {{ field }}
+                {% if field.errors %}
+                    <div class="error">{{ field.errors }}</div>
+                {% endif %}
+            </div>
+        {% endfor %}
+        <button type="submit" name="submit_book">Add Book</button>
+    </form>
+
+    <h2>Управление видимостью полей:</h2>
+    <form method="post" action="">
+        {% csrf_token %}
+        {% for profile in profiles %}
+            <div>
+                <input type="checkbox" name="visibility_{{ profile.column_name }}" id="visibility_{{ profile.column_name }}" {% if profile.is_visible %}checked{% endif %}>
+                <label for="visibility_{{ profile.column_name }}">{{ profile.column_name }}</label>
+            </div>
+        {% endfor %}
+        <button type="submit" name="save_changes">Save Changes</button>
+    </form>
+
+    <h2>Books:</h2>
+    <table border="1">
+        <tr>
+            {% if visibility.name %}<th>Name</th>{% endif %}
+            {% if visibility.title %}<th>Title</th>{% endif %}
+            {% if visibility.author %}<th>Author</th>{% endif %}
+            {% if visibility.description %}<th>Description</th>{% endif %}
+            {% if visibility.price %}<th>Price</th>{% endif %}
+        </tr>
+        {% for book in books %}
+            <tr>
+                {% if visibility.name %}<td>{{ book.name }}</td>{% endif %}
+                {% if visibility.title %}<td>{{ book.title }}</td>{% endif %}
+                {% if visibility.author %}<td>{{ book.author }}</td>{% endif %}
+                {% if visibility.description %}<td>{{ book.description }}</td>{% endif %}
+                {% if visibility.price %}<td>{{ book.price }}</td>{% endif %}
+            </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
