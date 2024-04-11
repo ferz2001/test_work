@@ -38,6 +38,7 @@
     <h2>Books:</h2>
     <table border="1">
         <tr>
+            {% if visibility.id %}<th>Id</th>{% endif %}
             {% if visibility.name %}<th>Name</th>{% endif %}
             {% if visibility.title %}<th>Title</th>{% endif %}
             {% if visibility.author %}<th>Author</th>{% endif %}
@@ -46,6 +47,7 @@
         </tr>
         {% for book in books %}
             <tr>
+                {% if visibility.id %}<td>{{ book.id }}</td>{% endif %}
                 {% if visibility.name %}<td>{{ book.name }}</td>{% endif %}
                 {% if visibility.title %}<td>{{ book.title }}</td>{% endif %}
                 {% if visibility.author %}<td>{{ book.author }}</td>{% endif %}
